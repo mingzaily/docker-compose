@@ -1,0 +1,22 @@
+version: 3
+
+services:
+    # nginx和php
+    nginx-php:
+        image: mingzaily/nginx-php:1.0
+        container_name: "nginx-php"
+        restart: always
+        ports: 
+            - "80:80"
+            - "443:443"
+            - "10000-11000:10000-11000"
+        volumes: 
+            - ./work/wwwlogs:/home/wwwlogs
+            - ./work/wwwroot:/home/wwwroot
+            - ./nginx/conf:/usr/local/nginx/conf
+        network:
+            - develop_network
+
+networks:
+    develop_network:
+        driver: bridge

@@ -1,0 +1,31 @@
+version: 3
+
+services:
+    # mysql
+    mysql:
+        image: mysql:5.7
+        container_name: mysql
+        restart: always
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./mysql/mysql:/var/lib/mysql
+            - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+        environment:
+            - MYSQL_ROOT_PASSWORD=password
+        network:
+            - develop_network
+    # redis
+    redis:
+        image: redis:5
+        container_name: "redis"
+        restart: always
+        command: redis-server --requirepass "123456"
+        ports:
+            - "6379:6379"
+        network:
+            - develop_network
+
+networks:
+    develop_network:
+        driver: bridge
